@@ -15,6 +15,10 @@ The project has the following functions:
 
 Note: You can also change the code in this project according to your specific needs
 
+# the best way to understand 
+
+**To better understand the working of this project, I recommend that you just follow the next steps to run the program and browse the all file folders to understand exactly how it works.**
+
 # requirements
 ```
 python == 3.7.9
@@ -49,7 +53,11 @@ python SRD.py
 after step 1, file structure like this:
 ```
 dataset_new
-    annotations 
+    train_labels 
+        xxx.txt
+        ...
+        xxx.txt
+    val_labels
         xxx.txt
         ...
         xxx.txt
