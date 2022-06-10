@@ -81,8 +81,13 @@ if __name__ == "__main__":
         for i in range(len(annos)):
             bbox = annos[i]["bbox"]
             cls_id = annos[i]["category_id"]
+            # bounding box
             draw.rectangle((bbox[0], bbox[1], bbox[0]+bbox[2], bbox[1]+bbox[3]), outline=colors[cls_id], width=2)
-            draw.text((bbox[0] + 2, bbox[1] + 2), categories[cls_id], colors[cls_id], font = ImageFont.truetype('simhei', 20))
+            # text and it's filling box
+            label_text = categories[cls_id]
+            label_size = draw.textsize(label_text, ImageFont.truetype('simhei', 20))
+            draw.rectangle((bbox[0], bbox[1], bbox[0]+label_size[0], bbox[1]+label_size[1]), fill=colors[cls_id])
+            draw.text((bbox[0], bbox[1]), label_text, "#000000", font = ImageFont.truetype('simhei', 20))
 
         # save the resulting image
         img.save("{}_anno_show/{}/{}".format(opts.new_name, opts.phase, img_name))
