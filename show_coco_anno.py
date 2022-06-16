@@ -3,6 +3,7 @@ import sys
 import json
 import random
 import argparse
+import platform
 import pandas as pd
 from PIL import Image, ImageDraw, ImageFont
 
@@ -22,6 +23,12 @@ if __name__ == "__main__":
     parser.add_argument("--phase", type=str, default='val')  # 'train' or 'val'
     parser.add_argument("--num_show", type=int, default=-1, help="number of images to show, -1 for all")  # -1 for all
     opts = parser.parse_args()
+
+    if platform.system() == "Windows":
+        text_font = "simhei"
+    elif platform.system() == "Linux":
+        text_font = "NotoSerifCJK-Regular"
+
 
     # make directions
     os.makedirs("{}_anno_show/{}".format(opts.new_name, opts.phase), exist_ok=True)
@@ -85,9 +92,9 @@ if __name__ == "__main__":
             draw.rectangle((bbox[0], bbox[1], bbox[0]+bbox[2], bbox[1]+bbox[3]), outline=colors[cls_id], width=2)
             # text and it's filling box
             label_text = categories[cls_id]
-            label_size = draw.textsize(label_text, ImageFont.truetype('simhei', 20))
+            label_size = draw.textsize(label_text, ImageFont.truetype(text_font, 20, encoding='unic'))
             draw.rectangle((bbox[0], bbox[1], bbox[0]+label_size[0], bbox[1]+label_size[1]), fill=colors[cls_id])
-            draw.text((bbox[0], bbox[1]), label_text, "#000000", font = ImageFont.truetype('simhei', 20))
+            draw.text((bbox[0], bbox[1]), label_text, "#000000", font = ImageFont.truetype(text_font, 20, encoding='unic'))
 
         # save the resulting image
         img.save("{}_anno_show/{}/{}".format(opts.new_name, opts.phase, img_name))
